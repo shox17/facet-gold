@@ -1,0 +1,61 @@
+<%- include('includes/header', { currentPage: '' }) %>
+
+<div class="page-header">
+  <h1 class="page-title">Dashboard</h1>
+  <div class="page-breadcrumb">
+    <span>Dashboard</span>
+  </div>
+</div>
+
+<% if (!member) { %>
+  <div class="admin-card">
+    <div class="text-center" style="padding: 60px 20px;">
+      <h2 style="font-size: 24px; margin-bottom: 16px; color: var(--text-primary);">Welcome to Facet & Gold Admin</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 32px;">Please login to access the admin panel</p>
+      <div style="display: flex; gap: 12px; justify-content: center;">
+        <a href="/admin/login" class="btn btn-primary">Login</a>
+        <a href="/admin/signup" class="btn btn-secondary">Sign Up</a>
+      </div>
+    </div>
+  </div>
+<% } else { %>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-card-header">
+        <div class="stat-card-title">Total Customers</div>
+      </div>
+      <div class="stat-card-value">—</div>
+      <div class="stat-card-change">View all customers</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-header">
+        <div class="stat-card-title">Total Products</div>
+      </div>
+      <div class="stat-card-value">—</div>
+      <div class="stat-card-change">View all products</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-header">
+        <div class="stat-card-title">Active Orders</div>
+      </div>
+      <div class="stat-card-value">—</div>
+      <div class="stat-card-change">Manage orders</div>
+    </div>
+  </div>
+
+  <div class="admin-card">
+    <div class="card-header">
+      <div class="card-title">Quick Actions</div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+      <a href="/admin/product/all" class="btn btn-primary" style="width: 100%;">
+        Manage Products
+      </a>
+      <a href="/admin/user/all" class="btn btn-secondary" style="width: 100%;">
+        Manage Customers
+      </a>
+    </div>
+  </div>
+<% } %>
+
+<%- include('includes/footer') %>

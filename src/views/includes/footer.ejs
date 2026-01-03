@@ -1,0 +1,15 @@
+<% 
+  const currentPath = typeof currentPage !== 'undefined' ? currentPage : '';
+  const isAuthPage = currentPath === 'login' || currentPath === 'signup';
+%>
+
+<% if (!isAuthPage) { %>
+      </div>
+    </main>
+  </div>
+  <script src="/js/admin.js"></script>
+</body>
+<% } else { %>
+</body>
+<% } %>
+</html>

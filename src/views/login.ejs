@@ -1,0 +1,52 @@
+<%- include('includes/header', { currentPage: 'login' }) %>
+
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h1 class="auth-title">Login</h1>
+      <p class="auth-subtitle">Welcome back to Facet & Gold</p>
+    </div>
+
+    <form action="/admin/login" method="POST">
+      <div class="form-group">
+        <label class="form-label required">Username</label>
+        <input
+          type="text"
+          name="memberNick"
+          class="form-input member-nick"
+          placeholder="Enter your username"
+          value=""
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label required">Password</label>
+        <input
+          type="password"
+          name="memberPassword"
+          class="form-input member-password"
+          placeholder="Enter your password"
+          value=""
+          required
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;">
+        Login
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <p>
+        Not registered yet?
+        <a href="/admin/signup" class="auth-link">Sign up</a>
+      </p>
+      <p style="margin-top: 12px;">
+        <a href="/admin" class="auth-link">← Go back Home</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<%- include('includes/footer') %>

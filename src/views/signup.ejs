@@ -1,0 +1,129 @@
+<%- include('includes/header', { currentPage: 'signup' }) %>
+
+<div class="auth-container">
+  <div class="auth-card" style="max-width: 600px;">
+    <div class="auth-header">
+      <h1 class="auth-title">Sign Up</h1>
+      <p class="auth-subtitle">Create your Facet & Gold admin account</p>
+    </div>
+
+    <form onsubmit="return validateSignupForm()" action="/admin/signup" method="POST" enctype="multipart/form-data">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label required">Username</label>
+          <input
+            type="text"
+            name="memberNick"
+            class="form-input member-nick"
+            placeholder="Enter username"
+            value=""
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label required">Phone</label>
+          <input
+            type="text"
+            name="memberPhone"
+            class="form-input member-phone"
+            placeholder="Enter phone number"
+            value=""
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label required">Password</label>
+          <input
+            type="password"
+            name="memberPassword"
+            class="form-input member-password"
+            placeholder="Enter password"
+            value=""
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label required">Repeat Password</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            class="form-input confirm-password"
+            placeholder="Repeat password"
+            value=""
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label required">Profile Image</label>
+        <div style="display: flex; gap: 24px; align-items: flex-start;">
+          <div style="flex-shrink: 0;">
+            <img class="upload-img-frame" id="profile-preview" src="/img/default.jpeg" style="width: 150px; height: 150px; object-fit: cover; border-radius: var(--radius); border: 2px solid var(--border-color); cursor: pointer;" />
+          </div>
+          <div style="flex: 1;">
+            <div class="upload-area" style="padding: 20px; text-align: left;">
+              <label for="input-file" style="cursor: pointer;">
+                <div style="margin-bottom: 12px;">
+                  <span style="color: var(--gold-accent); font-weight: 500;">Click to upload image</span>
+                </div>
+                <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
+                  Please upload jewellery shop image.<br />
+                  Only .jpg, .jpeg, or .png formats allowed!
+                </p>
+              </label>
+              <input
+                type="file"
+                id="input-file"
+                class="upload-hidden form-control-file member-image"
+                name="memberImage"
+                accept="image/jpeg,image/jpg,image/png"
+                style="display: none;"
+                onchange="previewProfileImage(this)"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <input name="memberType" value="JEWELLERY_SHOP" hidden />
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;">
+        Sign Up
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <p>
+        Already signed up?
+        <a href="/admin/login" class="auth-link">Login</a>
+      </p>
+      <p style="margin-top: 12px;">
+        <a href="/admin" class="auth-link">← Go back Home</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function previewProfileImage(input) {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('profile-preview').src = e.target.result;
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  // Make profile image clickable
+  document.getElementById('profile-preview').addEventListener('click', () => {
+    document.getElementById('input-file').click();
+  });
+</script>
+
+<script type="text/javascript" src="/js/signup.js"></script>
+<%- include('includes/footer') %>
