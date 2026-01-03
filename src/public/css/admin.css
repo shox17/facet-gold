@@ -79,6 +79,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Prevent scrolling on auth pages */
+body.auth-page {
+  overflow: hidden;
+  height: 100vh;
+}
+
 /* Override Bootstrap defaults for admin layout */
 .admin-sidebar ul,
 .admin-sidebar ol {
@@ -352,6 +358,15 @@ body {
   font-size: 15px;
   flex-shrink: 0;
   box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  position: relative;
+}
+
+.topbar-user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .topbar-user-info {
@@ -963,56 +978,312 @@ input[type="number"] {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #0B0B0C 0%, #1a1a1b 100%);
-  padding: var(--spacing-xl);
+  background-image: 
+    linear-gradient(
+      rgba(0, 0, 0, 0.45),
+      rgba(0, 0, 0, 0.45)
+    ),
+    url("/img/back.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-container > * {
+  position: relative;
+  z-index: 1;
 }
 
 .auth-card {
-  background-color: var(--surface);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-xl);
-  padding: var(--spacing-xl) var(--spacing-xl);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  padding: 40px;
   width: 100%;
   max-width: 480px;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(200, 162, 74, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #C8A24A 0%, #D4B563 50%, #C8A24A 100%);
+  border-radius: 16px 16px 0 0;
+}
+
+.auth-card-signup {
+  max-width: 720px;
+  padding: 32px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Signup form - same size as login, no scroll */
+.auth-container .auth-card {
+  overflow: visible;
 }
 
 .auth-header {
   text-align: center;
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .auth-title {
+  font-family: "Playfair Display", "Georgia", serif;
   font-size: 32px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: var(--spacing-sm);
-  letter-spacing: -0.5px;
+  font-weight: 700;
+  color: #1C1C1C;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
 }
 
 .auth-subtitle {
-  font-size: 15px;
-  color: var(--text-secondary);
+  font-family: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  font-size: 14px;
+  color: #6B7280;
   font-weight: 400;
+  letter-spacing: 0.2px;
+}
+
+/* Compact profile image section for signup */
+.auth-card .upload-img-frame {
+  width: 80px !important;
+  height: 80px !important;
+}
+
+.auth-card .upload-area {
+  padding: 10px !important;
+}
+
+.auth-card .form-group > div[style*="display: flex"] {
+  gap: 12px !important;
 }
 
 .auth-footer {
-  margin-top: var(--spacing-xl);
+  margin-top: 16px;
   text-align: center;
-  font-size: 14px;
-  color: var(--text-secondary);
+  font-size: 13px;
+  color: #6B7280;
+}
+
+.auth-footer p {
+  margin-top: 12px;
 }
 
 .auth-link {
-  color: var(--gold);
+  font-family: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  color: #C8A24A;
   text-decoration: none;
   font-weight: 500;
-  transition: color var(--transition-base);
+  transition: all 200ms ease;
 }
 
 .auth-link:hover {
-  color: var(--gold-light);
+  color: #B8903E;
   text-decoration: underline;
+}
+
+.auth-footer {
+  font-family: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+}
+
+/* Signup Form Specific Styles */
+.auth-form {
+  margin-top: 20px;
+}
+
+.auth-form .form-group {
+  margin-bottom: 16px;
+}
+
+.auth-form .form-row {
+  margin-bottom: 16px;
+  gap: 16px;
+}
+
+/* Compact spacing for signup form */
+.auth-card .form-group {
+  margin-bottom: 16px;
+}
+
+.auth-card .form-row {
+  margin-bottom: 16px;
+}
+
+.auth-form .form-label {
+  font-family: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #1C1C1C;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.auth-form .form-input {
+  font-family: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  height: 44px;
+  background-color: #F7F6F3;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 15px;
+  color: #1C1C1C;
+  transition: all 200ms ease;
+}
+
+.auth-form .form-input::placeholder {
+  color: #9CA3AF;
+}
+
+.auth-form .form-input:focus {
+  outline: none;
+  border-color: #C8A24A;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 0 4px rgba(200, 162, 74, 0.18);
+}
+
+.auth-form .form-helper {
+  font-family: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  font-size: 11px;
+  color: #6B7280;
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+.auth-submit-btn {
+  width: 100%;
+  margin-top: 16px;
+  background-color: #C8A24A;
+  color: #FFFFFF;
+  font-family: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  font-weight: 600;
+  padding: 12px 24px;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  border-radius: 12px;
+  height: 44px;
+  box-shadow: 0 10px 20px rgba(200, 162, 74, 0.25);
+  transition: all 200ms ease;
+  border: none;
+  cursor: pointer;
+}
+
+/* Signup form button */
+.auth-card button[type="submit"] {
+  margin-top: 8px;
+  height: 44px;
+}
+
+.auth-submit-btn:hover {
+  background-color: #B8903E;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(200, 162, 74, 0.3);
+}
+
+.auth-submit-btn:active {
+  background-color: #A88036;
+  transform: translateY(0);
+}
+
+.profile-upload-container {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.profile-preview-wrapper {
+  position: relative;
+  flex-shrink: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid rgba(200, 162, 74, 0.2);
+  cursor: pointer;
+  transition: all 200ms ease;
+  background-color: #F7F6F3;
+}
+
+.profile-preview-wrapper:hover {
+  border-color: #C8A24A;
+  box-shadow: 0 4px 12px rgba(200, 162, 74, 0.2);
+}
+
+.profile-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.profile-upload-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  color: white;
+}
+
+.profile-preview-wrapper:hover .profile-upload-overlay {
+  opacity: 1;
+}
+
+.profile-upload-info {
+  flex: 1;
+  cursor: pointer;
+}
+
+.profile-upload-text {
+  padding: 16px;
+  border: 1px dashed rgba(200, 162, 74, 0.5);
+  border-radius: 12px;
+  transition: all 200ms ease;
+  background-color: rgba(200, 162, 74, 0.06);
+}
+
+.profile-upload-info:hover .profile-upload-text {
+  border-color: #C8A24A;
+  background-color: rgba(200, 162, 74, 0.1);
+}
+
+.profile-upload-title {
+  display: block;
+  font-family: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #C8A24A;
+  margin-bottom: 8px;
+}
+
+.profile-upload-desc {
+  font-family: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  font-size: 12px;
+  color: #6B7280;
+  line-height: 1.6;
+  margin: 0;
 }
 
 /* ============================================
@@ -1050,11 +1321,43 @@ input[type="number"] {
     width: 200px;
   }
 
+  .auth-container {
+    background-attachment: scroll;
+    background-image: 
+      linear-gradient(
+        rgba(0, 0, 0, 0.55),
+        rgba(0, 0, 0, 0.55)
+      ),
+      url("/img/back.jpg");
+  }
+
   .auth-card {
-    padding: var(--spacing-lg);
+    padding: 32px 24px;
+    background: rgba(255, 255, 255, 0.98);
+  }
+
+  .auth-card-signup {
+    padding: 32px 24px;
+    background: rgba(255, 255, 255, 0.98);
+  }
+
+  .auth-title {
+    font-size: 32px;
   }
 
   .form-row {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .profile-upload-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .profile-preview-wrapper {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
   }
 }

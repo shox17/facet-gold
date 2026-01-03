@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 const routerAdmin = express.Router();
 import jewelleryShopController from "./controllers/jewellery-shop.controller";
 import productController from "./controllers/product.controller";
@@ -49,5 +49,18 @@ routerAdmin.post(
   jewelleryShopController.verifyJewelleryShop, // Middleware to verify Jewellery Shop  => req.member
   jewelleryShopController.updateChosenUser
 );
+
+/** Settings Pages */
+routerAdmin.get("/analytics", (req: Request, res: Response) => {
+  res.render("analytics");
+});
+
+routerAdmin.get("/messages", (req: Request, res: Response) => {
+  res.render("messages");
+});
+
+routerAdmin.get("/settings", (req: Request, res: Response) => {
+  res.render("settings");
+});
 
 export default routerAdmin;

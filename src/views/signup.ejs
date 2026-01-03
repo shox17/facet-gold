@@ -1,7 +1,7 @@
 <%- include('includes/header', { currentPage: 'signup' }) %>
 
 <div class="auth-container">
-  <div class="auth-card" style="max-width: 600px;">
+  <div class="auth-card">
     <div class="auth-header">
       <h1 class="auth-title">Sign Up</h1>
       <p class="auth-subtitle">Create your Facet & Gold admin account</p>
@@ -58,21 +58,20 @@
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" style="margin-bottom: 16px;">
         <label class="form-label required">Profile Image</label>
-        <div style="display: flex; gap: 24px; align-items: flex-start;">
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
           <div style="flex-shrink: 0;">
-            <img class="upload-img-frame" id="profile-preview" src="/img/default.jpeg" style="width: 150px; height: 150px; object-fit: cover; border-radius: var(--radius); border: 2px solid var(--border-color); cursor: pointer;" />
+            <img class="upload-img-frame" id="profile-preview" src="/img/default.jpeg" style="width: 80px; height: 80px; object-fit: cover; border-radius: var(--radius); border: 2px solid var(--border-color); cursor: pointer;" />
           </div>
           <div style="flex: 1;">
-            <div class="upload-area" style="padding: 20px; text-align: left;">
+            <div class="upload-area" style="padding: 10px; text-align: left;">
               <label for="input-file" style="cursor: pointer;">
-                <div style="margin-bottom: 12px;">
-                  <span style="color: var(--gold-accent); font-weight: 500;">Click to upload image</span>
+                <div style="margin-bottom: 6px;">
+                  <span style="color: var(--gold-accent); font-weight: 500; font-size: 12px;">Click to upload</span>
                 </div>
-                <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
-                  Please upload jewellery shop image.<br />
-                  Only .jpg, .jpeg, or .png formats allowed!
+                <p style="font-size: 10px; color: var(--text-secondary); line-height: 1.4; margin: 0;">
+                  .jpg, .jpeg, or .png only
                 </p>
               </label>
               <input

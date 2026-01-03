@@ -69,7 +69,7 @@
             </span>
             <span class="sidebar-nav-item-text">Products</span>
           </a>
-          <a href="#" class="sidebar-nav-item">
+          <a href="/admin/analytics" class="sidebar-nav-item <%= currentPath === 'analytics' ? 'active' : '' %>">
             <span class="sidebar-nav-item-icon">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10 2.5V17.5M17.5 10H2.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -81,7 +81,7 @@
         </div>
         <div class="sidebar-nav-section">
           <div class="sidebar-nav-section-title">SETTINGS</div>
-          <a href="#" class="sidebar-nav-item">
+          <a href="/admin/messages" class="sidebar-nav-item <%= currentPath === 'messages' ? 'active' : '' %>">
             <span class="sidebar-nav-item-icon">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M3.33333 5L10 9.58333L16.6667 5M3.33333 5L10 10.4167L16.6667 5M3.33333 5V15L10 10.4167M16.6667 5V15L10 10.4167M10 10.4167V19.1667" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -89,7 +89,7 @@
             </span>
             <span class="sidebar-nav-item-text">Messages</span>
           </a>
-          <a href="#" class="sidebar-nav-item">
+          <a href="/admin/settings" class="sidebar-nav-item <%= currentPath === 'settings' ? 'active' : '' %>">
             <span class="sidebar-nav-item-icon">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10 12.5C11.3807 12.5 12.5 11.3807 12.5 10C12.5 8.61929 11.3807 7.5 10 7.5C8.61929 7.5 7.5 8.61929 7.5 10C7.5 11.3807 8.61929 12.5 10 12.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -129,7 +129,25 @@
           <div class="topbar-user-dropdown" id="user-dropdown">
             <div class="topbar-user" onclick="toggleUserMenu()">
               <div class="topbar-user-avatar">
-                <%= member.memberNick ? member.memberNick.charAt(0).toUpperCase() : 'A' %>
+                <% if (member.memberImage) { %>
+                  <% 
+                    // Ensure image path is absolute and starts with /uploads/
+                    let imagePath = member.memberImage;
+                    // Remove leading slash if present, then add /uploads/ prefix
+                    if (imagePath.startsWith('/')) {
+                      imagePath = imagePath.substring(1);
+                    }
+                    // If path doesn't start with uploads/, add it
+                    if (!imagePath.startsWith('uploads/')) {
+                      imagePath = 'uploads/' + imagePath;
+                    }
+                    // Ensure it starts with / for absolute path
+                    imagePath = '/' + imagePath;
+                  %>
+                  <img src="<%= imagePath %>" alt="<%= member.memberNick || 'Admin' %>" />
+                <% } else { %>
+                  <%= member.memberNick ? member.memberNick.charAt(0).toUpperCase() : 'A' %>
+                <% } %>
               </div>
               <div class="topbar-user-info">
                 <div class="topbar-user-name"><%= member.memberNick || 'Admin' %></div>
@@ -156,5 +174,5 @@
       <!-- Content Area (will be filled by individual pages) -->
       <div class="admin-content">
 <% } else { %>
-<body>
+<body class="auth-page">
 <% } %>

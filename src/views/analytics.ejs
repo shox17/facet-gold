@@ -1,0 +1,65 @@
+<%- include('includes/header', { currentPage: 'analytics' }) %>
+
+<div class="page-header">
+  <h1 class="page-title">Analytics</h1>
+  <div class="page-breadcrumb">
+    <span>Dashboard</span>
+    <span class="page-breadcrumb-separator">/</span>
+    <span>Analytics</span>
+  </div>
+</div>
+
+<% if (!member) { %>
+  <div class="admin-card">
+    <div class="text-center" style="padding: 60px 20px;">
+      <h2 style="font-size: 24px; margin-bottom: 16px; color: var(--text-primary);">Access Denied</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 32px;">Please login first!</p>
+      <a href="/admin/login" class="btn btn-primary">Login</a>
+    </div>
+  </div>
+<% } else { %>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-card-header">
+        <div class="stat-card-title">Total Revenue</div>
+      </div>
+      <div class="stat-card-value">$0</div>
+      <div class="stat-card-change">This month</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-header">
+        <div class="stat-card-title">Orders</div>
+      </div>
+      <div class="stat-card-value">0</div>
+      <div class="stat-card-change">This month</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-header">
+        <div class="stat-card-title">Average Order Value</div>
+      </div>
+      <div class="stat-card-value">$0</div>
+      <div class="stat-card-change">This month</div>
+    </div>
+  </div>
+
+  <div class="admin-card">
+    <div class="card-header">
+      <div class="card-title">Sales Overview</div>
+    </div>
+    <div style="padding: var(--spacing-xl); text-align: center; color: var(--text-secondary);">
+      <p>Analytics dashboard coming soon</p>
+    </div>
+  </div>
+
+  <div class="admin-card">
+    <div class="card-header">
+      <div class="card-title">Product Performance</div>
+    </div>
+    <div style="padding: var(--spacing-xl); text-align: center; color: var(--text-secondary);">
+      <p>Product analytics will be displayed here</p>
+    </div>
+  </div>
+<% } %>
+
+<%- include('includes/footer') %>
+
