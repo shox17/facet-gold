@@ -38,7 +38,10 @@
   <div class="admin-layout">
     <!-- Sidebar -->
     <aside class="admin-sidebar">
-      <div class="sidebar-brand">Facet & Gold</div>
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-main">FACET & GOLD</div>
+        <div class="sidebar-brand-subtitle">Fine Jewellery</div>
+      </div>
       <nav class="sidebar-nav">
         <div class="sidebar-nav-section">
           <div class="sidebar-nav-section-title">MANAGEMENT</div>
@@ -50,7 +53,7 @@
             </span>
             <span class="sidebar-nav-item-text">Dashboard</span>
           </a>
-          <a href="/admin/user/all" class="sidebar-nav-item <%= currentPath === 'users' ? 'active' : '' %>">
+          <a href="/admin/user/all" class="sidebar-nav-item <%= currentPath === 'users' ? 'active' : '' %> <%= !member ? 'disabled' : '' %>" <%= !member ? 'onclick="return false;" style="opacity: 0.5; cursor: not-allowed;"' : '' %>>
             <span class="sidebar-nav-item-icon">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10 10C12.3012 10 14.1667 8.13452 14.1667 5.83333C14.1667 3.53215 12.3012 1.66667 10 1.66667C7.69881 1.66667 5.83333 3.53215 5.83333 5.83333C5.83333 8.13452 7.69881 10 10 10Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -59,7 +62,7 @@
             </span>
             <span class="sidebar-nav-item-text">Customers</span>
           </a>
-          <a href="/admin/product/all" class="sidebar-nav-item <%= currentPath === 'products' ? 'active' : '' %>">
+          <a href="/admin/product/all" class="sidebar-nav-item <%= currentPath === 'products' ? 'active' : '' %> <%= !member ? 'disabled' : '' %>" <%= !member ? 'onclick="return false;" style="opacity: 0.5; cursor: not-allowed;"' : '' %>>
             <span class="sidebar-nav-item-icon">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10 2.5L4.16667 6.25L10 10L15.8333 6.25L10 2.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -69,7 +72,7 @@
             </span>
             <span class="sidebar-nav-item-text">Products</span>
           </a>
-          <a href="/admin/analytics" class="sidebar-nav-item <%= currentPath === 'analytics' ? 'active' : '' %>">
+          <a href="/admin/analytics" class="sidebar-nav-item <%= currentPath === 'analytics' ? 'active' : '' %> <%= !member ? 'disabled' : '' %>" <%= !member ? 'onclick="return false;" style="opacity: 0.5; cursor: not-allowed;"' : '' %>>
             <span class="sidebar-nav-item-icon">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10 2.5V17.5M17.5 10H2.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -81,7 +84,7 @@
         </div>
         <div class="sidebar-nav-section">
           <div class="sidebar-nav-section-title">SETTINGS</div>
-          <a href="/admin/messages" class="sidebar-nav-item <%= currentPath === 'messages' ? 'active' : '' %>">
+          <a href="/admin/messages" class="sidebar-nav-item <%= currentPath === 'messages' ? 'active' : '' %> <%= !member ? 'disabled' : '' %>" <%= !member ? 'onclick="return false;" style="opacity: 0.5; cursor: not-allowed;"' : '' %>>
             <span class="sidebar-nav-item-icon">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M3.33333 5L10 9.58333L16.6667 5M3.33333 5L10 10.4167L16.6667 5M3.33333 5V15L10 10.4167M16.6667 5V15L10 10.4167M10 10.4167V19.1667" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -89,7 +92,7 @@
             </span>
             <span class="sidebar-nav-item-text">Messages</span>
           </a>
-          <a href="/admin/settings" class="sidebar-nav-item <%= currentPath === 'settings' ? 'active' : '' %>">
+          <a href="/admin/settings" class="sidebar-nav-item <%= currentPath === 'settings' ? 'active' : '' %> <%= !member ? 'disabled' : '' %>" <%= !member ? 'onclick="return false;" style="opacity: 0.5; cursor: not-allowed;"' : '' %>>
             <span class="sidebar-nav-item-icon">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10 12.5C11.3807 12.5 12.5 11.3807 12.5 10C12.5 8.61929 11.3807 7.5 10 7.5C8.61929 7.5 7.5 8.61929 7.5 10C7.5 11.3807 8.61929 12.5 10 12.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>

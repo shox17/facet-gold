@@ -1,11 +1,16 @@
 <%- include('includes/header', { currentPage: 'users' }) %>
 
-<div class="page-header">
-  <h1 class="page-title">Customers' List</h1>
+<div class="page-header-enhanced">
+    <div class="page-header-content">
+      <div class="page-header-text">
+        <h1 class="page-title">Customers</h1>
+        <p class="page-subtitle">Manage your customer accounts</p>
+      </div>
+    </div>
   <div class="page-breadcrumb">
     <span>Dashboard</span>
     <span class="page-breadcrumb-separator">/</span>
-    <span>Customers' List</span>
+    <span>Customers</span>
   </div>
 </div>
 
@@ -18,24 +23,97 @@
     </div>
   </div>
 <% } else { %>
-  <div class="admin-card">
-    <div class="card-header">
-      <div class="card-title">All Customers</div>
-        <div class="card-actions">
-          <div class="search-box">
-            <input type="text" class="search-input" placeholder="Search..." />
-            <span class="search-icon">
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-          </div>
+  <!-- Summary Stats -->
+  <div class="products-stats-grid">
+    <div class="product-stat-card">
+      <div class="stat-card__icon stat-card__icon--customers">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 10C12.3012 10 14.1667 8.13452 14.1667 5.83333C14.1667 3.53215 12.3012 1.66667 10 1.66667C7.69881 1.66667 5.83333 3.53215 5.83333 5.83333C5.83333 8.13452 7.69881 10 10 10Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M17.1583 18.3333C17.1583 15.1083 13.95 12.5 10 12.5C6.05 12.5 2.84166 15.1083 2.84166 18.3333" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="product-stat-content">
+        <div class="product-stat-value">15</div>
+        <div class="product-stat-label">Total Customers</div>
+      </div>
+    </div>
+    <div class="product-stat-card">
+      <div class="stat-card__icon stat-card__icon--active">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16.6667 5L7.5 14.1667L3.33333 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="product-stat-content">
+        <div class="product-stat-value">14</div>
+        <div class="product-stat-label">Approved</div>
+      </div>
+    </div>
+    <div class="product-stat-card">
+      <div class="stat-card__icon stat-card__icon--paused">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6.66667 4.16667H13.3333V15.8333H6.66667V4.16667Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="product-stat-content">
+        <div class="product-stat-value">1</div>
+        <div class="product-stat-label">Blocked</div>
+      </div>
+    </div>
+    <div class="product-stat-card">
+      <div class="stat-card__icon stat-card__icon--new">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 2.5V17.5M17.5 10H2.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="product-stat-content">
+        <div class="product-stat-value">5</div>
+        <div class="product-stat-label">New This Week</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-card products-card">
+    <div class="products-table-header">
+      <div class="products-filters">
+        <div class="search-box-enhanced">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="search-icon">
+            <path d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <input type="text" class="search-input-enhanced" placeholder="Search customers…" />
         </div>
+        <select class="filter-select-enhanced">
+          <option value="all">All Status</option>
+          <option value="ACTIVE">Approved</option>
+          <option value="BLOCK">Blocked</option>
+          <option value="DELETE">Rejected</option>
+          <option value="PENDING">Pending</option>
+        </select>
+        <div class="products-header-actions">
+          <button class="btn btn-icon-secondary" title="Export">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 2.5V12.5M10 12.5L6.66667 9.16667M10 12.5L13.3333 9.16667" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2.5 15.8333V17.5C2.5 18.1904 3.05964 18.75 3.75 18.75H16.25C16.9404 18.75 17.5 18.1904 17.5 17.5V15.8333" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button class="btn btn-icon-secondary" title="Refresh">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.5 10C17.5 14.1421 14.1421 17.5 10 17.5C5.85786 17.5 2.5 14.1421 2.5 10C2.5 5.85786 5.85786 2.5 10 2.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M17.5 2.5V7.5H12.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button class="btn btn-primary" disabled title="New Customer (Coming Soon)">
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 6px;">
+              <path d="M10 4.16667V15.8333M4.16667 10H15.8333" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+            New Customer
+          </button>
+        </div>
+      </div>
     </div>
 
     <div class="admin-table-container">
-      <table class="admin-table">
+      <table class="admin-table products-table customers-table">
         <thead>
           <tr>
             <th>#</th>
@@ -48,14 +126,23 @@
           <% users.map(function(value, index) { %>
           <tr>
             <td><%= index + 1 %></td>
-            <td><%= value.memberNick %></td>
-            <td><%= value.memberPhone %></td>
             <td>
-              <select class="spec-select member-status" id="<%= value._id %>" style="min-width: 140px; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius); background-color: var(--card-bg);">
-                <option value="ACTIVE" <%=value.memberStatus==='ACTIVE' ? 'selected' : '' %>>ACTIVE</option>
-                <option value="BLOCK" <%=value.memberStatus==='BLOCK' ? 'selected' : '' %>>BLOCKED</option>
-                <option value="DELETE" <%=value.memberStatus==='DELETE' ? 'selected' : '' %>>DELETED</option>
-              </select>
+              <div class="product-name-cell">
+                <div class="product-name-main"><%= value.memberNick %></div>
+              </div>
+            </td>
+            <td><span class="phone-number"><%= value.memberPhone %></span></td>
+            <td>
+              <div class="status-cell-wrapper">
+                <span class="status-badge status-<%= value.memberStatus === 'ACTIVE' ? 'active' : value.memberStatus === 'BLOCK' ? 'blocked' : 'deleted' %>" id="badge-<%= value._id %>">
+                  <%= value.memberStatus === 'ACTIVE' ? 'Approved' : value.memberStatus === 'BLOCK' ? 'Blocked' : 'Deleted' %>
+                </span>
+                <select class="status-select member-status status-<%= value.memberStatus === 'ACTIVE' ? 'active' : value.memberStatus === 'BLOCK' ? 'blocked' : 'deleted' %>" id="<%= value._id %>" onchange="updateStatusBadge('<%= value._id %>', this.value)">
+                  <option value="ACTIVE" <%=value.memberStatus==='ACTIVE' ? 'selected' : '' %>>ACTIVE</option>
+                  <option value="BLOCK" <%=value.memberStatus==='BLOCK' ? 'selected' : '' %>>BLOCKED</option>
+                  <option value="DELETE" <%=value.memberStatus==='DELETE' ? 'selected' : '' %>>DELETED</option>
+                </select>
+              </div>
             </td>
           </tr>
           <% }) %>
@@ -64,6 +151,36 @@
     </div>
   </div>
 <% } %>
+
+<script>
+  // Update status badge when select changes
+  function updateStatusBadge(customerId, status) {
+    const badge = document.getElementById('badge-' + customerId);
+    const select = document.getElementById(customerId);
+    
+    if (!badge || !select) return;
+    
+    // Remove all status classes
+    badge.className = 'status-badge';
+    select.className = 'status-select member-status';
+    
+    // Add appropriate class based on status
+    if (status === 'ACTIVE') {
+      badge.classList.add('status-active');
+      select.classList.add('status-active');
+      badge.textContent = 'Approved';
+    } else if (status === 'BLOCK') {
+      badge.classList.add('status-blocked');
+      select.classList.add('status-blocked');
+      badge.textContent = 'Blocked';
+    } else if (status === 'DELETE') {
+      badge.classList.add('status-deleted');
+      select.classList.add('status-deleted');
+      badge.textContent = 'Deleted';
+    }
+  }
+
+</script>
 
 <script type="text/javascript" src="/js/users.js"></script>
 <%- include('includes/footer') %>

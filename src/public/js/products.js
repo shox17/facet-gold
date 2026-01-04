@@ -1,16 +1,8 @@
 console.log("Products frontend javascript file");
 
 $(function () {
+  // Modal system handles open/close - no need for manual toggle
   // Both size and weight fields are always visible now - no need to toggle
-  $("#process-btn").on("click", () => {
-    $(".product-form-container").slideToggle(500);
-    $("#process-btn").css("display", "none");
-  });
-
-  $("#cancel-btn").on("click", () => {
-    $(".product-form-container").slideToggle(100);
-    $("#process-btn").css("display", "flex");
-  });
 
   $(".new-product-status").on("change", async function (e) {
     const id = e.target.id,
