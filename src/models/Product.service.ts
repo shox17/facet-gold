@@ -46,6 +46,7 @@ class ProductService {
       .exec();
     if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
 
+    console.log("result:", result);
     return result;
   }
 

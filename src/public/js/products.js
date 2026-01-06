@@ -8,6 +8,11 @@ $(function () {
     const id = e.target.id,
       productStatus = $(`#${id}.new-product-status`).val();
 
+    // Update badge immediately for better UX
+    if (typeof updateProductStatusBadge === 'function') {
+      updateProductStatusBadge(id, productStatus);
+    }
+
     try {
       const response = await axios.post(`/admin/product/${id}`, {
         productStatus: productStatus,
@@ -16,10 +21,22 @@ $(function () {
       const result = response?.data;
       if (result?.data) {
         $(".new-product-status").blur();
-      } else alert("Product update failed!");
+      } else {
+        alert("Product update failed!");
+        // Revert badge on error
+        if (typeof updateProductStatusBadge === 'function') {
+          const originalStatus = $(this).data('original-status') || 'PAUSE';
+          updateProductStatusBadge(id, originalStatus);
+        }
+      }
     } catch (err) {
       console.log(err);
       alert("Product update failed!");
+      // Revert badge on error
+      if (typeof updateProductStatusBadge === 'function') {
+        const originalStatus = $(this).data('original-status') || 'PAUSE';
+        updateProductStatusBadge(id, originalStatus);
+      }
     }
   });
 });
@@ -31,7 +48,7 @@ function validateForm() {
     productLeftCount = $(".product-left-count").val(),
     productCollection = $(".product-collection").val(),
     productSize = $(".product-size").val(),
-    productVolume = $(".product-volume").val(),
+    productWeightGram = $(".product-weight-gram").val(),
     productDesc = $(".product-desc").val();
 
   if (
@@ -41,7 +58,7 @@ function validateForm() {
     productLeftCount === "" ||
     productCollection === "" ||
     productSize === "" ||
-    productVolume === ""
+    productWeightGram === ""
   ) {
     alert("Please insert all required details!");
     return false;

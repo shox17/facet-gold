@@ -130,15 +130,20 @@
           </td>
           <td><span class="collection-badge"><%= value.productCollection %></span></td>
           <td><%= value.productSize || 'N/A' %></td>
-          <td><%= value.productVolume ? value.productVolume + 'g' : 'N/A' %></td>
+          <td><%= value.productWeightGram ? value.productWeightGram + 'g' : 'N/A' %></td>
           <td class="text-right"><span class="price-value">$<%= value.productPrice %></span></td>
           <td class="text-center"><%= value.productLeftCount %></td>
           <td>
-            <select class="status-select status-<%= value.productStatus.toLowerCase() %>" id="<%= value._id %>">
-              <option value="PAUSE" <%=value.productStatus==='PAUSE' ? 'selected' : '' %>>PAUSE</option>
-              <option value="PROCESS" <%=value.productStatus==='PROCESS' ? 'selected' : '' %>>PROCESS</option>
-              <option value="DELETE" <%=value.productStatus==='DELETE' ? 'selected' : '' %>>DELETE</option>
-            </select>
+            <div class="status-cell-wrapper">
+              <span class="status-badge status-<%= value.productStatus === 'PROCESS' ? 'active' : value.productStatus === 'PAUSE' ? 'blocked' : 'deleted' %>" id="badge-<%= value._id %>">
+                <%= value.productStatus === 'PROCESS' ? 'Process' : value.productStatus === 'PAUSE' ? 'Pause' : 'Deleted' %>
+              </span>
+              <select class="new-product-status status-select status-<%= value.productStatus === 'PROCESS' ? 'active' : value.productStatus === 'PAUSE' ? 'blocked' : 'deleted' %>" id="<%= value._id %>" onchange="updateProductStatusBadge('<%= value._id %>', this.value)">
+                <option value="PAUSE" <%=value.productStatus==='PAUSE' ? 'selected' : '' %>>PAUSE</option>
+                <option value="PROCESS" <%=value.productStatus==='PROCESS' ? 'selected' : '' %>>PROCESS</option>
+                <option value="DELETE" <%=value.productStatus==='DELETE' ? 'selected' : '' %>>DELETE</option>
+              </select>
+            </div>
           </td>
         </tr>
         <% }) %>
@@ -224,7 +229,7 @@
     <div class="fg-form-row">
       <div class="fg-form-group">
         <label class="fg-form-label required">Metal Weight (Grams)</label>
-        <select class="fg-form-select product-volume" name="productVolume" required>
+        <select class="fg-form-select product-weight-gram" name="productWeightGram" required>
           <option value="1">1g</option>
           <option value="2">2g</option>
           <option value="3">3g</option>
@@ -297,6 +302,33 @@
       if (input) input.click();
     });
   });
+
+  // Update product status badge when select changes
+  function updateProductStatusBadge(productId, status) {
+    const badge = document.getElementById('badge-' + productId);
+    const select = document.getElementById(productId);
+    
+    if (!badge || !select) return;
+    
+    // Remove all status classes
+    badge.className = 'status-badge';
+    select.className = 'new-product-status status-select';
+    
+    // Add appropriate class based on status
+    if (status === 'PROCESS') {
+      badge.classList.add('status-active');
+      select.classList.add('status-active');
+      badge.textContent = 'Process';
+    } else if (status === 'PAUSE') {
+      badge.classList.add('status-blocked');
+      select.classList.add('status-blocked');
+      badge.textContent = 'Pause';
+    } else if (status === 'DELETE') {
+      badge.classList.add('status-deleted');
+      select.classList.add('status-deleted');
+      badge.textContent = 'Deleted';
+    }
+  }
 </script>
 
 

@@ -38,10 +38,10 @@ const productSchema = new Schema(
       default: "US_6",
     },
     // gram weight for jewellery
-    productVolume: {
+    productWeightGram: {
       type: Number,
-      enum: [1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 30, 50],
-      default: 5,
+      enum: ProductWeightGram,
+      default: ProductWeightGram.G_5,
     },
     productDesc: {
       type: String,
@@ -58,9 +58,9 @@ const productSchema = new Schema(
   { timestamps: true } // createdAt and updatedAt
 );
 
-// Ensures a unique combination of productName, productSize, and productVolume
+// Ensures a unique combination of productName, productSize, and productWeightGram
 productSchema.index(
-  { productName: 1, productSize: 1, productVolume: 1 },
+  { productName: 1, productSize: 1, productWeightGram: 1 },
   { unique: true }
 );
 
