@@ -72,9 +72,9 @@
           <path d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <input type="text" class="search-input-enhanced" placeholder="Search products…" />
+        <input type="text" class="search-input-enhanced" id="product-search-input" placeholder="Search products…" />
       </div>
-      <select class="filter-select-enhanced">
+      <select class="filter-select-enhanced" id="product-filter-select">
         <option value="all">All Collections</option>
         <option value="RING">Ring</option>
         <option value="NECKLACE">Necklace</option>
@@ -102,7 +102,7 @@
         </button>
       </div>
     </div>
-  </div>
+      </div>
 
   <div class="admin-table-container">
     <table class="admin-table products-table">
@@ -116,41 +116,41 @@
           <th class="text-right">Product Price</th>
           <th class="text-center">Product Stock</th>
           <th>Product Status</th>
-        </tr>
-      </thead>
+                </tr>
+              </thead>
       <tbody>
-        <% products.map(function(value, key) { %>
-        <tr>
+              <% products.map(function(value, key) { %>
+        <tr data-product-name="<%= value.productName.toLowerCase() %>" data-product-collection="<%= value.productCollection %>">
           <td><%= key + 1 %></td>
-          <td>
+                  <td>
             <div class="product-name-cell">
               <div class="product-name-main"><%= value.productName.split(' ').slice(0, 2).join(' ') %></div>
               <div class="product-name-sub"><%= value.productName.split(' ').slice(2).join(' ') || 'Jewellery' %></div>
             </div>
-          </td>
+                  </td>
           <td><span class="collection-badge"><%= value.productCollection %></span></td>
           <td><%= value.productSize || 'N/A' %></td>
           <td><%= value.productWeightGram ? value.productWeightGram + 'g' : 'N/A' %></td>
           <td class="text-right"><span class="price-value">$<%= value.productPrice %></span></td>
           <td class="text-center"><%= value.productLeftCount %></td>
-          <td>
+                  <td>
             <div class="status-cell-wrapper">
               <span class="status-badge status-<%= value.productStatus === 'PROCESS' ? 'active' : value.productStatus === 'PAUSE' ? 'blocked' : 'deleted' %>" id="badge-<%= value._id %>">
                 <%= value.productStatus === 'PROCESS' ? 'Process' : value.productStatus === 'PAUSE' ? 'Pause' : 'Deleted' %>
               </span>
               <select class="new-product-status status-select status-<%= value.productStatus === 'PROCESS' ? 'active' : value.productStatus === 'PAUSE' ? 'blocked' : 'deleted' %>" id="<%= value._id %>" onchange="updateProductStatusBadge('<%= value._id %>', this.value)">
-                <option value="PAUSE" <%=value.productStatus==='PAUSE' ? 'selected' : '' %>>PAUSE</option>
-                <option value="PROCESS" <%=value.productStatus==='PROCESS' ? 'selected' : '' %>>PROCESS</option>
-                <option value="DELETE" <%=value.productStatus==='DELETE' ? 'selected' : '' %>>DELETE</option>
-              </select>
+                      <option value="PAUSE" <%=value.productStatus==='PAUSE' ? 'selected' : '' %>>PAUSE</option>
+                      <option value="PROCESS" <%=value.productStatus==='PROCESS' ? 'selected' : '' %>>PROCESS</option>
+                      <option value="DELETE" <%=value.productStatus==='DELETE' ? 'selected' : '' %>>DELETE</option>
+                    </select>
             </div>
-          </td>
+                  </td>
         </tr>
         <% }) %>
-      </tbody>
-    </table>
-  </div>
-</div>
+                </tbody>
+            </table>
+            </div>
+          </div>
 
 <!-- Modal Backdrop -->
 <div class="fg-modal-backdrop" id="newProductModal" data-modal>
@@ -159,23 +159,23 @@
       <div class="fg-modal-header-content">
         <h2 class="fg-modal-title" id="modal-title">New Product Detail</h2>
         <p class="fg-modal-subtitle">Add a new jewellery item</p>
-      </div>
+            </div>
       <button type="button" class="fg-modal-close" data-modal-close aria-label="Close modal">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
-    </div>
+              </div>
     <div class="fg-modal-body">
       <form onsubmit="return validateForm()" action="/admin/product/create" method="POST" class="product-form-container fg-form" enctype="multipart/form-data">
         <div class="fg-form-content">
-          <input name="productStatus" value="PAUSE" class="product-status" hidden />
+              <input name="productStatus" value="PAUSE" class="product-status" hidden />
 
     <!-- Product Name - Full Width -->
     <div class="fg-form-group fg-form-group-full">
       <label class="fg-form-label required">Product Name</label>
       <input type="text" name="productName" class="fg-form-input product-name" placeholder="Enter product name" required />
-    </div>
+            </div>
 
     <!-- Price and Stock - 2 Column Grid -->
     <div class="fg-form-row">
@@ -183,13 +183,13 @@
         <label class="fg-form-label required">Product Price</label>
         <input type="text" name="productPrice" class="fg-form-input product-price" placeholder="0.00" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" required />
         <div class="fg-form-helper">Enter price in dollars</div>
-      </div>
+              </div>
       <div class="fg-form-group">
         <label class="fg-form-label required">Product Stock</label>
         <input type="text" name="productLeftCount" class="fg-form-input product-left-count" placeholder="0" inputmode="numeric" pattern="[0-9]*" required />
         <div class="fg-form-helper">Available quantity</div>
-      </div>
-    </div>
+              </div>
+            </div>
 
     <!-- Collection and Product Size - 2 Column Grid -->
     <div class="fg-form-row">
@@ -200,10 +200,10 @@
           <option value="NECKLACE">Necklace</option>
           <option value="BRACELET">Bracelet</option>
           <option value="EARRING">Earring</option>
-          <option value="OTHER">Other</option>
-        </select>
+                  <option value="OTHER">Other</option>
+                </select>
         <div class="fg-form-helper">Select jewellery type</div>
-      </div>
+              </div>
       <div class="fg-form-group">
         <label class="fg-form-label required">Product Size</label>
         <select class="fg-form-select product-size" name="productSize" required>
@@ -220,10 +220,10 @@
           <option value="US_9">US 9</option>
           <option value="US_9.5">US 9.5</option>
           <option value="US_10">US 10</option>
-        </select>
+                </select>
         <div class="fg-form-helper">Sizes vary by jewellery type (e.g., US ring sizes, bracelet lengths)</div>
       </div>
-    </div>
+              </div>
 
     <!-- Metal Weight - 2 Column Grid (left side, right side empty for future use) -->
     <div class="fg-form-row">
@@ -243,55 +243,55 @@
           <option value="20">20g</option>
           <option value="30">30g</option>
           <option value="50">50g</option>
-        </select>
+                </select>
         <div class="fg-form-helper">Metal weight in grams (e.g., 5g)</div>
-      </div>
+              </div>
       <div class="fg-form-group"></div>
-    </div>
+            </div>
 
     <!-- Description - Full Width -->
     <div class="fg-form-group fg-form-group-full">
       <label class="fg-form-label">Product Description</label>
       <textarea name="productDesc" class="fg-form-textarea product-desc" placeholder="Enter product description" rows="4"></textarea>
-    </div>
+            </div>
 
     <!-- Product Images - Full Width -->
     <div class="fg-form-group fg-form-group-full">
       <label class="fg-form-label required">Product Images</label>
       <div class="upload-preview" id="image-previews" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;">
-        <div class="upload-img-box">
-          <img src="/img/upload.svg" class="1" id="image-section-1" />
+                <div class="upload-img-box">
+                  <img src="/img/upload.svg" class="1" id="image-section-1" />
           <input type="file" id="file-1" name="productImages" class="image-one" required accept="image/*" onchange="previewFileHandler(this, 1)" style="display: none;" />
-        </div>
-        <div class="upload-img-box">
-          <img src="/img/upload.svg" class="2" id="image-section-2" />
+                </div>
+                <div class="upload-img-box">
+                  <img src="/img/upload.svg" class="2" id="image-section-2" />
           <input type="file" id="file-2" name="productImages" class="image-two" accept="image/*" onchange="previewFileHandler(this, 2)" style="display: none;" />
-        </div>
-        <div class="upload-img-box">
-          <img src="/img/upload.svg" class="3" id="image-section-3" />
+                </div>
+                <div class="upload-img-box">
+                  <img src="/img/upload.svg" class="3" id="image-section-3" />
           <input type="file" id="file-3" name="productImages" class="image-three" accept="image/*" onchange="previewFileHandler(this, 3)" style="display: none;" />
-        </div>
-        <div class="upload-img-box">
-          <img src="/img/upload.svg" class="4" id="image-section-4" />
+                </div>
+                <div class="upload-img-box">
+                  <img src="/img/upload.svg" class="4" id="image-section-4" />
           <input type="file" id="file-4" name="productImages" class="image-four" accept="image/*" onchange="previewFileHandler(this, 4)" style="display: none;" />
-        </div>
-        <div class="upload-img-box">
-          <img src="/img/upload.svg" class="5" id="image-section-5" />
+                </div>
+                <div class="upload-img-box">
+                  <img src="/img/upload.svg" class="5" id="image-section-5" />
           <input type="file" id="file-5" name="productImages" class="image-five" accept="image/*" onchange="previewFileHandler(this, 5)" style="display: none;" />
-        </div>
-        <input name="restaurantIid" class="restaurant-id" hidden />
+                </div>
+                <input name="restaurantIid" class="restaurant-id" hidden />
       </div>
-    </div>
-  </div>
+              </div>
+            </div>
 
         <div class="fg-form-actions">
           <button type="button" class="btn btn-secondary" id="cancel-btn" data-modal-close>Cancel</button>
           <button type="submit" class="btn btn-primary fg-form-submit" id="create-btn">Create Product</button>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
-  </div>
-</div>
 
 <script>
   // Make images clickable to trigger file input
@@ -332,5 +332,5 @@
 </script>
 
 
-<script type="text/javascript" src="/js/products.js"></script>
-<%- include('includes/footer') %>
+    <script type="text/javascript" src="/js/products.js"></script>
+  <%- include('includes/footer') %>

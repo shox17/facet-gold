@@ -24,6 +24,7 @@
     crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="/js/main.js"></script>
 </head>
 
@@ -31,9 +32,11 @@
   // Determine current page for active sidebar item
   const currentPath = typeof currentPage !== 'undefined' ? currentPage : '';
   const isAuthPage = currentPath === 'login' || currentPath === 'signup';
+  // Show admin layout (sidebar + topbar) only if authenticated AND not on auth pages
+  const showAdminLayout = !isAuthPage && member;
 %>
 
-<% if (!isAuthPage) { %>
+<% if (showAdminLayout) { %>
 <body>
   <div class="admin-layout">
     <!-- Sidebar -->
@@ -110,24 +113,24 @@
       <!-- Top Bar -->
       <header class="admin-topbar">
         <div class="topbar-left">
-          <a href="/admin/" class="topbar-back-btn">
+          <button type="button" class="topbar-back-btn" id="topbar-back-btn" title="Go to Dashboard">
             <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-          </a>
+          </button>
         </div>
         <div class="topbar-right">
-          <div class="topbar-icon-btn">
+          <button type="button" class="topbar-icon-btn" id="topbar-notifications-btn" title="Notifications">
             <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M15 6.66667C15 5.78261 14.6488 4.93477 14.0237 4.30964C13.3986 3.68452 12.5507 3.33333 11.6667 3.33333C10.7826 3.33333 9.93477 3.68452 9.30964 4.30964C8.68452 4.93477 8.33333 5.78261 8.33333 6.66667C8.33333 12.5 5 14.1667 5 14.1667H18.3333C18.3333 14.1667 15 12.5 15 6.66667Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <span class="topbar-notification-dot"></span>
-          </div>
-          <div class="topbar-icon-btn">
+          </button>
+          <button type="button" class="topbar-icon-btn" id="topbar-messages-btn" title="Messages">
             <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M3.33333 5L10 9.58333L16.6667 5M3.33333 5L10 10.4167L16.6667 5M3.33333 5V15L10 10.4167M16.6667 5V15L10 10.4167M10 10.4167V19.1667" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-          </div>
+          </button>
           <% if (member) { %>
           <div class="topbar-user-dropdown" id="user-dropdown">
             <div class="topbar-user" onclick="toggleUserMenu()">

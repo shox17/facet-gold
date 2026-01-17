@@ -1,9 +1,11 @@
 <% 
   const currentPath = typeof currentPage !== 'undefined' ? currentPage : '';
   const isAuthPage = currentPath === 'login' || currentPath === 'signup';
+  // Show admin layout (sidebar + topbar) only if authenticated AND not on auth pages
+  const showAdminLayout = !isAuthPage && member;
 %>
 
-<% if (!isAuthPage) { %>
+<% if (showAdminLayout) { %>
       </div>
     </main>
   </div>

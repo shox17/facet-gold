@@ -109,9 +109,18 @@
 
   <div class="admin-card">
     <div class="card-header">
+      <div class="card-title">Sales Overview</div>
+    </div>
+    <div class="chart-container" style="padding: var(--spacing-xl); position: relative; height: 400px;">
+      <canvas id="salesChart"></canvas>
+    </div>
+  </div>
+
+  <div class="admin-card">
+    <div class="card-header">
       <div class="card-title">Quick Actions</div>
     </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; padding: var(--spacing-xl);">
       <a href="/admin/product/all" class="btn btn-primary" style="width: 100%;">
         Manage Products
       </a>
@@ -121,5 +130,111 @@
     </div>
   </div>
 <% } %>
+
+<script>
+  // Initialize Sales Chart
+  document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('salesChart');
+    if (!ctx) return;
+
+    const salesChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [{
+          label: 'Sales Revenue',
+          data: [3200, 2800, 3500, 4200, 3800, 4500, 5200, 4800, 5500, 6000, 5800, 6500],
+          borderColor: '#e3c08d',
+          backgroundColor: 'rgba(227, 192, 141, 0.1)',
+          borderWidth: 3,
+          fill: true,
+          tension: 0.4,
+          pointBackgroundColor: '#e3c08d',
+          pointBorderColor: '#ffffff',
+          pointBorderWidth: 2,
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          pointHoverBackgroundColor: '#d4b563',
+          pointHoverBorderColor: '#ffffff',
+          pointHoverBorderWidth: 3
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            labels: {
+              color: '#4a5568',
+              font: {
+                size: 13,
+                weight: '500',
+                family: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+              },
+              padding: 20,
+              usePointStyle: true,
+              pointStyle: 'circle'
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            padding: 12,
+            titleFont: {
+              size: 13,
+              weight: '600'
+            },
+            bodyFont: {
+              size: 13
+            },
+            borderColor: '#e3c08d',
+            borderWidth: 1,
+            cornerRadius: 8,
+            displayColors: true,
+            callbacks: {
+              label: function(context) {
+                return 'Revenue: $' + context.parsed.y.toLocaleString();
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: {
+              color: 'rgba(227, 192, 141, 0.1)',
+              drawBorder: false
+            },
+            ticks: {
+              color: '#4a5568',
+              font: {
+                size: 12
+              },
+              callback: function(value) {
+                return '$' + value.toLocaleString();
+              }
+            }
+          },
+          x: {
+            grid: {
+              display: false
+            },
+            ticks: {
+              color: '#4a5568',
+              font: {
+                size: 12
+              }
+            }
+          }
+        },
+        interaction: {
+          intersect: false,
+          mode: 'index'
+        }
+      }
+    });
+  });
+</script>
 
 <%- include('includes/footer') %>

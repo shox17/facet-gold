@@ -1,6 +1,62 @@
 console.log("Products frontend javascript file");
 
 $(function () {
+  // Add pop-up messages for non-functional buttons
+  $('.btn-icon-secondary[title="Export"]').on('click', function(e) {
+    e.preventDefault();
+    if (typeof showToast === 'function') {
+      showToast('Export feature is coming soon!', 'info', 3000);
+    } else {
+      alert('Export feature is coming soon!');
+    }
+  });
+
+  $('.btn-icon-secondary[title="Refresh"]').on('click', function(e) {
+    e.preventDefault();
+    if (typeof showToast === 'function') {
+      showToast('Refresh feature is coming soon!', 'info', 3000);
+    } else {
+      alert('Refresh feature is coming soon!');
+    }
+  });
+
+  // Search and Filter Functionality
+  const searchInput = document.getElementById('product-search-input');
+  const filterSelect = document.getElementById('product-filter-select');
+  const tableRows = document.querySelectorAll('.products-table tbody tr');
+
+  function filterProducts() {
+    const searchTerm = searchInput.value.toLowerCase().trim();
+    const filterValue = filterSelect.value;
+
+    tableRows.forEach(row => {
+      const productName = row.getAttribute('data-product-name') || '';
+      const productCollection = row.getAttribute('data-product-collection') || '';
+
+      // Check search filter
+      const matchesSearch = searchTerm === '' || productName.includes(searchTerm);
+
+      // Check collection filter
+      const matchesFilter = filterValue === 'all' || productCollection === filterValue;
+
+      // Show/hide row based on both filters
+      if (matchesSearch && matchesFilter) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  }
+
+  // Add event listeners
+  if (searchInput) {
+    searchInput.addEventListener('input', filterProducts);
+  }
+
+  if (filterSelect) {
+    filterSelect.addEventListener('change', filterProducts);
+  }
+
   // Modal system handles open/close - no need for manual toggle
   // Both size and weight fields are always visible now - no need to toggle
 

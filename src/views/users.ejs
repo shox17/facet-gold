@@ -80,9 +80,9 @@
             <path d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <input type="text" class="search-input-enhanced" placeholder="Search customers…" />
+          <input type="text" class="search-input-enhanced" id="customer-search-input" placeholder="Search customers…" />
         </div>
-        <select class="filter-select-enhanced">
+        <select class="filter-select-enhanced" id="customer-filter-select">
           <option value="all">All Status</option>
           <option value="ACTIVE">Approved</option>
           <option value="BLOCK">Blocked</option>
@@ -102,7 +102,7 @@
               <path d="M17.5 2.5V7.5H12.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
-          <button class="btn btn-primary" disabled title="New Customer (Coming Soon)">
+          <button class="btn btn-primary" id="process-btn" data-modal-open="newCustomerModal">
             <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 6px;">
               <path d="M10 4.16667V15.8333M4.16667 10H15.8333" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
             </svg>
@@ -124,7 +124,7 @@
         </thead>
         <tbody>
           <% users.map(function(value, index) { %>
-          <tr>
+          <tr data-customer-name="<%= value.memberNick.toLowerCase() %>" data-customer-phone="<%= value.memberPhone.toLowerCase() %>" data-customer-status="<%= value.memberStatus %>">
             <td><%= index + 1 %></td>
             <td>
               <div class="product-name-cell">
@@ -151,6 +151,126 @@
     </div>
   </div>
 <% } %>
+
+<!-- Modal Backdrop -->
+<div class="fg-modal-backdrop" id="newCustomerModal" data-modal>
+  <div class="fg-modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+    <div class="fg-modal-header">
+      <div class="fg-modal-header-content">
+        <h2 class="fg-modal-title" id="modal-title">New Customer Detail</h2>
+        <p class="fg-modal-subtitle">Add a new customer account</p>
+      </div>
+      <button type="button" class="fg-modal-close" data-modal-close aria-label="Close modal">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="fg-modal-body">
+      <form onsubmit="return validateCustomerForm()" action="/admin/user/create" method="POST" class="product-form-container fg-form" enctype="multipart/form-data">
+        <div class="fg-form-content">
+          <input name="memberStatus" value="ACTIVE" class="member-status" hidden />
+          <input name="memberType" value="USER" class="member-type" hidden />
+
+          <!-- Customer Name - Full Width -->
+          <div class="fg-form-group fg-form-group-full">
+            <label class="fg-form-label required">Customer Name</label>
+            <input type="text" name="memberNick" class="fg-form-input customer-name" placeholder="Enter customer name" required />
+          </div>
+
+          <!-- Phone and Password - 2 Column Grid -->
+          <div class="fg-form-row">
+            <div class="fg-form-group">
+              <label class="fg-form-label required">Phone Number</label>
+              <input type="tel" name="memberPhone" class="fg-form-input customer-phone" placeholder="+1 234 567 8900" required />
+              <div class="fg-form-helper">Enter phone number</div>
+            </div>
+            <div class="fg-form-group">
+              <label class="fg-form-label required">Password</label>
+              <input type="password" name="memberPassword" class="fg-form-input customer-password" placeholder="Enter password" required />
+              <div class="fg-form-helper">Set account password</div>
+            </div>
+          </div>
+
+          <!-- Address - Full Width -->
+          <div class="fg-form-group fg-form-group-full">
+            <label class="fg-form-label">Address</label>
+            <input type="text" name="memberAddress" class="fg-form-input customer-address" placeholder="Enter customer address" />
+            <div class="fg-form-helper">Optional shipping address</div>
+          </div>
+
+          <!-- Description - Full Width -->
+          <div class="fg-form-group fg-form-group-full">
+            <label class="fg-form-label">Customer Description</label>
+            <textarea name="memberDesc" class="fg-form-textarea customer-desc" placeholder="Enter customer description or notes" rows="4"></textarea>
+          </div>
+
+          <!-- Customer Image - Full Width -->
+          <div class="fg-form-group fg-form-group-full">
+            <label class="fg-form-label">Customer Image</label>
+            <div class="upload-preview" id="customer-image-preview" style="display: flex; gap: 16px;">
+              <div class="upload-img-box" style="width: 200px; height: 200px;">
+                <img src="/img/upload.svg" id="customer-image-section" />
+                <input type="file" id="customer-file" name="memberImage" class="customer-image" accept="image/*" onchange="previewCustomerImage(this)" style="display: none;" />
+              </div>
+            </div>
+            <div class="fg-form-helper">Optional profile picture</div>
+          </div>
+        </div>
+
+        <div class="fg-form-actions">
+          <button type="button" class="btn btn-secondary" id="cancel-btn" data-modal-close>Cancel</button>
+          <button type="submit" class="btn btn-primary fg-form-submit" id="create-btn">Create Customer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Make customer image clickable to trigger file input
+  document.querySelector('#customer-image-preview .upload-img-box')?.addEventListener('click', () => {
+    const input = document.getElementById('customer-file');
+    if (input) input.click();
+  });
+
+  // Preview customer image
+  function previewCustomerImage(input) {
+    const file = input.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = document.getElementById('customer-image-section');
+        if (img) {
+          img.src = e.target.result;
+          img.style.width = '100%';
+          img.style.height = '100%';
+          img.style.objectFit = 'cover';
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  // Validate customer form
+  function validateCustomerForm() {
+    const name = document.querySelector('.customer-name')?.value;
+    const phone = document.querySelector('.customer-phone')?.value;
+    const password = document.querySelector('.customer-password')?.value;
+
+    if (!name || !phone || !password) {
+      alert('Please fill in all required fields');
+      return false;
+    }
+
+    if (password.length < 6) {
+      alert('Password must be at least 6 characters long');
+      return false;
+    }
+
+    return true;
+  }
+</script>
 
 <script>
   // Update status badge when select changes
