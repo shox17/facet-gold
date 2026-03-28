@@ -1,0 +1,56 @@
+# Dependencies & build output
+node_modules
+dist
+build
+*.tsbuildinfo
+
+# Local uploads (image creates empty dir; persist via volume)
+uploads
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tests
+coverage
+.nyc_output
+
+# Git & tooling
+.git
+.gitignore
+.cursor
+.mcps
+**/.vscode
+.idea
+*.sublime-workspace
+
+# Env (never bake secrets into the image)
+.env
+.env.*
+!.env.example
+
+# Docker (not needed inside build context)
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Temp
+.temp
+.tmp
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Misc
+*.md
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

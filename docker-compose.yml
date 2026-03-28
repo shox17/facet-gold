@@ -1,0 +1,57 @@
+services:
+  api:
+    container_name: facet-gold-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "${HOST_PORT:-3004}:3004"
+    environment:
+      NODE_ENV: production
+      PORT: "3004"
+      MONGO_URL: ${MONGO_URL:-mongodb://mongo:27017/facetgold}
+    env_file:
+      - .env
+    volumes:
+      - ./uploads:/app/uploads
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks:
+      - facet-gold
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://127.0.0.1:3004/product/all?page=1&limit=1&order=createdAt',(r)=>{r.resume();process.exit(r.statusCode===200?0:1)}).on('error',()=>process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 50s
+
+  mongo:
+    container_name: facet-gold-mongo
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - facet_gold_mongo_data:/data/db
+    networks:
+      - facet-gold
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+volumes:
+  facet_gold_uploads:
+  facet_gold_mongo_data:
+
+networks:
+  facet-gold:
+    driver: bridge
